@@ -17,6 +17,13 @@
 	"config": {
 		"sort-packages": true
 	},
+	"extra": {
+		"laravel": {
+			"providers": [
+				"Nox\\LastChaos\\LastChaosServiceProvider"
+			]
+		}
+	},
 	"minimum-stability": "dev",
 	"prefer-stable": true
 }
