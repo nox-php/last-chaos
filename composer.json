@@ -1,6 +1,11 @@
 {
 	"name": "nox-php/last-chaos",
 	"description": "Add LastChaos game integration to your website.",
+	"keywords": [
+		"nox",
+		"last-chaos",
+		"nox-module"
+	],
 	"require": {
 		"php": "^8.1"
 	},
