@@ -9,6 +9,7 @@ use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Nox\Framework\Admin\Contracts\HasCustomAbilities;
 use Nox\Framework\Support\Env;
@@ -63,11 +64,17 @@ class Settings extends Page implements HasCustomAbilities
     {
         $state = $this->form->getState();
 
-        $env = (new Env())
+        (new Env())
             ->put('LAST_CHAOS_AUTH_HASH', $state['password_hash'])
             ->put('LAST_CHAOS_AUTH_SALT', $state['password_salt'])
             ->put('LAST_CHAOS_MAX_ACCOUNTS_PER_USER', $state['max_accounts_per_user'])
             ->save();
+
+        Notification::make()
+            ->success()
+            ->title('Last Chaos')
+            ->body('Settings successfully updated')
+            ->send();
     }
 
     protected static function getNavigationGroup(): ?string
@@ -131,7 +138,6 @@ class Settings extends Page implements HasCustomAbilities
                                         ->password()
                                         ->dehydrated(fn(Closure $get, $state) => filled($state) || $get('database_password_empty'))
                                         ->disabled(static fn(Closure $get) => $get('database_password_empty') === true)
-                                        ->required(static fn(Closure $get): bool => $get('database_password_empty') === false)
                                         ->suffixAction(static function (Closure $get, Closure $set) {
                                             if ($get('database_password_empty') === true) {
                                                 return \Filament\Forms\Components\Actions\Action::make('empty-database-password')
