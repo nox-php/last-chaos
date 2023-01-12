@@ -3,14 +3,27 @@
 namespace Nox\LastChaos\Traits;
 
 use Illuminate\Contracts\Database\Query\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 trait DelayedDeleting
 {
     public bool $forceDeleting = false;
 
+    public static function bootDelayedDeleting()
+    {
+        static::addGlobalScope(new SoftDeletingScope());
+    }
+
+    public function initializeSoftDeletes()
+    {
+        if (! isset($this->casts[$this->getDeletedAtColumn()])) {
+            $this->casts[$this->getDeletedAtColumn()] = 'datetime';
+        }
+    }
+
     public function trashed(): bool
     {
-        return $this->{$this->getDelayedDeletingColumn()} !== 0;
+        return $this->{$this->getDeletedAtColumn()} !== 0;
     }
 
     public function delete()
@@ -21,7 +34,7 @@ trait DelayedDeleting
 
         if (! $this->forceDeleting) {
             $this->forceFill([
-                $this->getDelayedDeletingColumn() => now()->addDay()->unix(),
+                $this->getDeletedAtColumn() => now()->addDay()->unix(),
             ])->save();
 
             return;
@@ -44,7 +57,7 @@ trait DelayedDeleting
         }
 
         $this->forceFill([
-            $this->getDelayedDeletingColumn() => 0,
+            $this->getDeletedAtColumn() => 0,
         ])->save();
     }
 
@@ -56,7 +69,7 @@ trait DelayedDeleting
     public function withoutTrashed(Builder $query): Builder
     {
         return $query->where(
-            $this->getDelayedDeletingColumn(),
+            $this->getDeletedAtColumn(),
             '=',
             0
         );
@@ -65,14 +78,19 @@ trait DelayedDeleting
     public function onlyTrashed(Builder $query): Builder
     {
         return $query->where(
-            $this->getDelayedDeletingColumn(),
+            $this->getDeletedAtColumn(),
             '!=',
             0
         );
     }
 
-    protected function getDelayedDeletingColumn(): string
+    protected function getDeletedAtColumn(): string
     {
         return 'a_deletedelay';
+    }
+
+    public function getQualifiedDeletedAtColumn()
+    {
+        return $this->qualifyColumn($this->getDeletedAtColumn());
     }
 }
