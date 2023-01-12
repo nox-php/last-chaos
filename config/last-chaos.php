@@ -22,5 +22,5 @@ return [
         'salt' => env('LAST_CHAOS_AUTH_SALT', '')
     ],
 
-    'max_accounts_per_user' => env('LAST_CHAOS_MAX_ACCOUNTS_PER_USER', '')
+    'max_accounts_per_user' => env('LAST_CHAOS_MAX_ACCOUNTS_PER_USER', 1)
 ];
