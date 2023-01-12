@@ -7,7 +7,8 @@
 		"nox-module"
 	],
 	"require": {
-		"php": "^8.1"
+		"php": "^8.1",
+		"nox-php/framework-new": "dev-main"
 	},
 	"autoload": {
 		"psr-4": {

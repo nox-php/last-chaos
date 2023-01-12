@@ -6,11 +6,16 @@ use Filament\PluginServiceProvider;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Nox\Framework\Auth\Models\User;
 use Nox\LastChaos\Filament\RelationManagers\AccountRelationManager;
+use Nox\LastChaos\Filament\Resources\AccountResource;
 use Nox\LastChaos\Models\Account;
 
 class LastChaosServiceProvider extends PluginServiceProvider
 {
     public static string $name = 'last-chaos';
+
+    protected array $resources = [
+        AccountResource::class
+    ];
 
     protected array $relationManagers = [
         AccountRelationManager::class
