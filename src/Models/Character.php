@@ -4,12 +4,11 @@ namespace Nox\LastChaos\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Nox\LastChaos\Traits\DelayedDeleting;
+use Nox\LastChaos\Concerns\DelayedDeletes;
 
 class Character extends Model
 {
-    use DelayedDeleting, SoftDeletes;
+    use DelayedDeletes;
 
     protected $connection = 'last-chaos';
 

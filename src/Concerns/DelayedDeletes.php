@@ -1,20 +1,21 @@
 <?php
 
-namespace Nox\LastChaos\Traits;
+namespace Nox\LastChaos\Concerns;
 
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Nox\LastChaos\Scopes\DelayedDeletingScope;
 
-trait DelayedDeleting
+trait DelayedDeletes
 {
     public bool $forceDeleting = false;
 
-    public static function bootDelayedDeleting()
+    public static function bootDelayedDeletes(): void
     {
-        static::addGlobalScope(new SoftDeletingScope());
+        static::addGlobalScope(new DelayedDeletingScope());
     }
 
-    public function initializeSoftDeletes()
+    public function initializeDelayedDeletes(): void
     {
         if (! isset($this->casts[$this->getDeletedAtColumn()])) {
             $this->casts[$this->getDeletedAtColumn()] = 'datetime';
@@ -26,7 +27,7 @@ trait DelayedDeleting
         return $this->{$this->getDeletedAtColumn()} !== 0;
     }
 
-    public function delete()
+    public function delete(): void
     {
         if (! $this->exists) {
             return;
@@ -43,14 +44,14 @@ trait DelayedDeleting
         parent::delete();
     }
 
-    public function forceDelete()
+    public function forceDelete(): void
     {
         $this->forceDeleting = true;
 
         $this->delete();
     }
 
-    public function restore()
+    public function restore(): void
     {
         if (! $this->exists) {
             return;
@@ -89,7 +90,7 @@ trait DelayedDeleting
         return 'a_deletedelay';
     }
 
-    public function getQualifiedDeletedAtColumn()
+    public function getQualifiedDeletedAtColumn(): string
     {
         return $this->qualifyColumn($this->getDeletedAtColumn());
     }
