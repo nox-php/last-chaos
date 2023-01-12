@@ -2,7 +2,6 @@
 
 namespace Nox\LastChaos\Models;
 
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Nox\LastChaos\Traits\DelayedDeleting;
@@ -40,13 +39,6 @@ class Character extends Model
             Account::class,
             'a_user_index',
             'user_code'
-        );
-    }
-
-    public function isAdmin(): Attribute
-    {
-        return Attribute::make(
-            get: fn(): bool => $this->a_admin === 10
         );
     }
 

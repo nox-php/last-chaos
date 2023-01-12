@@ -11,6 +11,7 @@ use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Nox\Framework\Auth\Models\User;
 use Nox\LastChaos\Filament\Resources\AccountResource\Pages;
+use Nox\LastChaos\Filament\Resources\AccountResource\RelationManagers\CharacterRelationManager;
 use Nox\LastChaos\Models\Account;
 use Nox\LastChaos\Support\LastChaos;
 
@@ -154,6 +155,13 @@ class AccountResource extends Resource
                     ->requiresConfirmation()
                     ->action('unbanAccounts')
             ]);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            CharacterRelationManager::class
+        ];
     }
 
     public static function getPages(): array
