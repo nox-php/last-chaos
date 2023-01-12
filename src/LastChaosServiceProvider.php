@@ -2,6 +2,7 @@
 
 namespace Nox\LastChaos;
 
+use Filament\Facades\Filament;
 use Filament\PluginServiceProvider;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Nox\Framework\Auth\Models\User;
@@ -36,6 +37,14 @@ class LastChaosServiceProvider extends PluginServiceProvider
 
         User::resolveRelationUsing('accounts', static function (User $model): HasMany {
             return $model->hasMany(Account::class, 'nox_user_id');
+        });
+
+        $this->app->resolving('filament', function () {
+            Filament::serving(static function () {
+                Filament::registerNavigationGroups([
+                    __('last-chaos::groups.last-chaos') => 25
+                ]);
+            });
         });
     }
 
