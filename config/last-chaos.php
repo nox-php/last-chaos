@@ -20,5 +20,7 @@ return [
     'auth' => [
         'hash' => env('LAST_CHAOS_AUTH_HASH', 'sha256'),
         'salt' => env('LAST_CHAOS_AUTH_SALT', '')
-    ]
+    ],
+
+    'max_accounts_per_user' => env('LAST_CHAOS_MAX_ACCOUNTS_PER_USER', '')
 ];
