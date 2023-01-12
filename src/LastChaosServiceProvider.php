@@ -42,7 +42,7 @@ class LastChaosServiceProvider extends PluginServiceProvider
         $this->app->resolving('filament', function () {
             Filament::serving(static function () {
                 Filament::registerNavigationGroups([
-                    __('last-chaos::groups.last-chaos') => 25
+                    __('last-chaos::groups.last-chaos') => 0
                 ]);
             });
         });

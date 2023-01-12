@@ -94,4 +94,17 @@ class Account extends Model
             }
         );
     }
+
+    public function status(): Attribute
+    {
+        return Attribute::make(
+            get: function() {
+                if($this->is_banned) {
+                    return 'banned';
+                }
+
+                return $this->is_online ? 'online' : 'offline';
+            }
+        );
+    }
 }
