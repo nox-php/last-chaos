@@ -11,6 +11,7 @@ use Filament\Tables\Actions\DetachAction;
 use Filament\Tables\Actions\DetachBulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\BadgeColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -28,6 +29,7 @@ class StashRelationManager extends RelationManager
     {
         return $table
             ->columns([
+                ImageColumn::make('icon'),
                 TextColumn::make('a_name')
                     ->label('Name')
                     ->formatStateUsing(static fn(Item $record): string => empty($record->a_name) ? $record->a_name_usa : $record->a_name),
