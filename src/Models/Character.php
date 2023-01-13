@@ -4,11 +4,13 @@ namespace Nox\LastChaos\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Nox\LastChaos\Concerns\DelayedDeletes;
+use Nox\LastChaos\Concerns\HasDynamicTables;
 
 class Character extends Model
 {
-    use DelayedDeletes;
+    use DelayedDeletes, HasDynamicTables;
 
     protected $connection = 'last-chaos';
 
@@ -39,6 +41,14 @@ class Character extends Model
             Account::class,
             'a_user_index',
             'user_code'
+        );
+    }
+
+    public function stash(): HasMany
+    {
+        return $this->hasManyDynamic(
+            Stash::class,
+            config('last-chaos.database.schemas.db') . '.t_stash_0' . substr((string)$this->a_index, -1)
         );
     }
 
