@@ -14,7 +14,7 @@ class CharacterResource extends Resource
 {
     protected static ?string $model = Character::class;
 
-    protected static ?string $slug = 'last-chaos/accounts';
+    protected static ?string $slug = 'last-chaos/characters';
 
     protected static ?string $navigationIcon = 'heroicon-o-user';
 
