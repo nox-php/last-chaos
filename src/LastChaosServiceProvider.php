@@ -9,6 +9,7 @@ use Nox\Framework\Auth\Models\User;
 use Nox\LastChaos\Filament\Pages\Settings;
 use Nox\LastChaos\Filament\RelationManagers\AccountRelationManager;
 use Nox\LastChaos\Filament\Resources\AccountResource;
+use Nox\LastChaos\Filament\Resources\CharacterResource;
 use Nox\LastChaos\Models\Account;
 
 class LastChaosServiceProvider extends PluginServiceProvider
@@ -16,7 +17,8 @@ class LastChaosServiceProvider extends PluginServiceProvider
     public static string $name = 'last-chaos';
 
     protected array $resources = [
-        AccountResource::class
+        AccountResource::class,
+        CharacterResource::class
     ];
 
     protected array $pages = [
