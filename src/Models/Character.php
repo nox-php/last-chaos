@@ -13,7 +13,9 @@ class Character extends Model
     use DelayedDeletes, HasDynamicTables;
 
     public $timestamps = false;
+
     protected $connection = 'last-chaos';
+
     protected $primaryKey = 'a_index';
 
     protected $fillable = [
@@ -46,33 +48,35 @@ class Character extends Model
     {
         return $this->belongsToMany(
             Item::class,
-            config('last-chaos.database.schemas.db') . '.t_stash0' . substr((string)$this->a_index, -1),
+            config('last-chaos.database.schemas.db') . '.t_stash0' . substr((string)$this->a_user_index, -1),
             foreignPivotKey: 'a_user_idx',
             relatedPivotKey: 'a_item_idx',
-            relatedKey: 'a_index'
-        )->withPivot([
-            'a_plus',
-            'a_wear_pos',
-            'a_flag',
-            'a_serial',
-            'a_count',
-            'a_used',
-            'a_item_option0',
-            'a_item_option1',
-            'a_item_option2',
-            'a_item_option3',
-            'a_item_option4',
-            'a_used_2',
-            'a_socket',
-            'a_item_origin_var0',
-            'a_item_origin_var1',
-            'a_item_origin_var2',
-            'a_item_origin_var3',
-            'a_item_origin_var4',
-            'a_item_origin_var5',
-            'a_now_dur',
-            'a_max_dur'
-        ]);
+            relatedKey: 'a_index',
+        )
+            ->using(Stash::class)
+            ->withPivot([
+                'a_plus',
+                'a_wear_pos',
+                'a_flag',
+                'a_serial',
+                'a_count',
+                'a_used',
+                'a_item_option0',
+                'a_item_option1',
+                'a_item_option2',
+                'a_item_option3',
+                'a_item_option4',
+                'a_used_2',
+                'a_socket',
+                'a_item_origin_var0',
+                'a_item_origin_var1',
+                'a_item_origin_var2',
+                'a_item_origin_var3',
+                'a_item_origin_var4',
+                'a_item_origin_var5',
+                'a_now_dur',
+                'a_max_dur'
+            ]);
     }
 
     public function getTable(): string

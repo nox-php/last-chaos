@@ -59,6 +59,8 @@ class LastChaosServiceProvider extends PluginServiceProvider
     {
         parent::packageBooted();
 
+        $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
+
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
         transformer_register(
