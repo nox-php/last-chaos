@@ -8,6 +8,7 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Nox\LastChaos\Filament\Resources\CharacterResource\Pages;
+use Nox\LastChaos\Filament\Resources\CharacterResource\RelationManagers\StashRelationManager;
 use Nox\LastChaos\Models\Character;
 
 class CharacterResource extends Resource
@@ -41,6 +42,13 @@ class CharacterResource extends Resource
     public static function getModelLabel(): string
     {
         return __('last-chaos::resources.character.label');
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            StashRelationManager::class
+        ];
     }
 
     public static function getPages(): array
