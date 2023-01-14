@@ -12,6 +12,7 @@ use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Nox\Framework\Admin\Filament\Resources\UserResource;
 use Nox\LastChaos\Filament\Resources\CharacterResource\Pages;
+use Nox\LastChaos\Filament\Resources\CharacterResource\RelationManagers\InventoryRelationManager;
 use Nox\LastChaos\Filament\Resources\CharacterResource\RelationManagers\StashRelationManager;
 use Nox\LastChaos\Models\Character;
 use Nox\LastChaos\Scopes\DelayedDeletingScope;
@@ -251,6 +252,7 @@ class CharacterResource extends Resource
     public static function getRelations(): array
     {
         return [
+            InventoryRelationManager::class,
             StashRelationManager::class
         ];
     }

@@ -2,10 +2,10 @@
 
 namespace Nox\LastChaos\Models;
 
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Nox\LastChaos\Concerns\DelayedDeletes;
 use Nox\LastChaos\Concerns\HasDynamicTables;
 
@@ -34,7 +34,17 @@ class Character extends Model
         return $this->belongsTo(
             Account::class,
             'a_user_index',
-            'user_code'
+            'user_code',
+        );
+    }
+
+    public function inventory_rows(): HasMany
+    {
+        return $this->hasManyDynamic(
+            InventoryRow::class,
+            config('last-chaos.database.schemas.db') . '.t_inven0' . substr((string)$this->a_index, -1),
+            'a_char_idx',
+            'a_index'
         );
     }
 

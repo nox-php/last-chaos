@@ -30,7 +30,7 @@ class LastChaosServiceProvider extends PluginServiceProvider
     ];
 
     protected array $styles = [
-        'last-chaos' => __DIR__ . '/../resources/dist/last-chaos.css'
+        'last-chaos' => __DIR__ . '/../dist/css/last-chaos.css'
     ];
 
     public function packageRegistered(): void

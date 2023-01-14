@@ -19,8 +19,6 @@ use Nox\LastChaos\Models\Item;
 
 class StashRelationManager extends RelationManager
 {
-    protected static string $view = 'last-chaos::filament.relation-managers.stash';
-
     protected static string $relationship = 'stash';
 
     protected static ?string $recordTitleAttribute = 'a_name';

@@ -1,9 +1,9 @@
 {
     "private": true,
     "scripts": {
-        "dev": "npx tailwindcss -i resources/css/last-chaos.css -o resources/dist/last-chaos.css --postcss --watch",
-        "build": "npx tailwindcss -i resources/css/last-chaos.css -o resources/dist/last-chaos.css --postcss --minify && npm run purge",
-        "purge": "filament-purge -i resources/dist/last-chaos.css -o resources/dist/last-chaos.css"
+        "dev": "npx tailwindcss -i resources/css/last-chaos.css -o dist/css/last-chaos.css --postcss --watch",
+        "build": "npx tailwindcss -i resources/css/last-chaos.css -o dist/css/last-chaos.css --postcss --minify && npm run purge",
+        "purge": "filament-purge -i dist/css/last-chaos.css -o dist/css/last-chaos.css"
     },
     "devDependencies": {
         "@awcodes/filament-plugin-purge": "^1.0.2",
