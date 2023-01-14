@@ -64,7 +64,7 @@ class CharacterResource extends Resource
                                             ->numeric()
                                             ->minValue(0)
                                             ->default(0),
-                                        Forms\Components\Fieldset::make('Jobs')
+                                        Forms\Components\Fieldset::make('Job')
                                             ->columnSpanFull()
                                             ->schema([
                                                 Forms\Components\Select::make('a_job')
