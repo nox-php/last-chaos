@@ -86,6 +86,13 @@ class CharacterResource extends Resource
                                             ->required()
                                             ->minValue(0)
                                             ->default(0),
+                                        Forms\Components\TextInput::make('a_skill_point')
+                                            ->label('Skill points')
+                                            ->required()
+                                            ->minValue(0)
+                                            ->default(0)
+                                            ->formatStateUsing(static fn(int $state): int => $state / 100000)
+                                            ->mutateDehydratedStateUsing(static fn(int $state): int => $state * 100000),
                                         Forms\Components\TextInput::make('a_statpt_str')
                                             ->label('Strength')
                                             ->required()

@@ -2,6 +2,7 @@
 
 namespace Nox\LastChaos\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -25,6 +26,7 @@ class Character extends Model
         'a_levelup_date' => 'datetime',
         'a_admin' => 'integer',
         'a_deletedelay' => 'integer',
+        'a_skill_point' => 'integer'
     ];
 
     public function account(): BelongsTo
