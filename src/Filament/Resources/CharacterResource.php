@@ -30,6 +30,8 @@ class CharacterResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('a_nick')
                     ->label('Name'),
+                Forms\Components\TextInput::make('a_level')
+                ->label('Level'),
                 Forms\Components\TextInput::make('a_admin')
                     ->label('Admin level'),
                 Forms\Components\TextInput::make('a_statpt_remain')
