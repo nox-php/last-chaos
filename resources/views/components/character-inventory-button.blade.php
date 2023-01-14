@@ -13,7 +13,7 @@
 <div>
     <button
             {{ $attributes->merge([
-                'class' => 'flex items-center justify-center absolute bg-transparent border-2 border-transparent transition hover:border-primary-600',
+                'class' => 'flex items-center justify-center absolute bg-transparent border-2 border-transparent transition hover:border-primary-700',
                 'style' => 'width: 53px; height: 53px; ' . $style
             ]) }}
             x-tooltip="tooltips[{{ $tab }}][{{ $row }}][{{ $column }}]"
