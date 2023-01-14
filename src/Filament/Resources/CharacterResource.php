@@ -3,6 +3,7 @@
 namespace Nox\LastChaos\Filament\Resources;
 
 use Carbon\Carbon;
+use Closure;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -14,6 +15,7 @@ use Nox\LastChaos\Filament\Resources\CharacterResource\Pages;
 use Nox\LastChaos\Filament\Resources\CharacterResource\RelationManagers\StashRelationManager;
 use Nox\LastChaos\Models\Character;
 use Nox\LastChaos\Scopes\DelayedDeletingScope;
+use Nox\LastChaos\Support\LastChaos;
 
 class CharacterResource extends Resource
 {
@@ -56,18 +58,18 @@ class CharacterResource extends Resource
                                             ->numeric()
                                             ->minValue(0)
                                             ->default(0),
-                                        Forms\Components\Select::make('character_class')
-                                            ->options([
-                                                0 => 'Titan',
-                                                1 => 'Knight',
-                                                2 => 'Healer',
-                                                3 => 'Mage',
-                                                4 => 'Rogue',
-                                                5 => 'Sorcerer',
-                                                6 => 'NightShadow',
-                                                7 => 'Ex-Rogue',
-                                                8 => 'ArchMage'
-                                            ]),
+                                        Forms\Components\Select::make('a_job')
+                                            ->label('Class')
+                                            ->required()
+                                            ->options(LastChaos::getAvailableClasses()),
+                                        Forms\Components\Select::make('a_job2')
+                                            ->label('Job')
+                                            ->required()
+                                            ->options(static function (Closure $get) {
+                                                $class = $get('a_job');
+
+                                                return $class === null ? [] : LastChaos::getAvailableJobs($class);
+                                            })
                                     ])
                             ]),
                         Forms\Components\Tabs\Tab::make('Stats')
