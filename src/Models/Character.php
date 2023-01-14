@@ -43,9 +43,10 @@ class Character extends Model
         return $this->belongsToMany(
             Item::class,
             config('last-chaos.database.schemas.db') . '.t_stash0' . substr((string)$this->a_user_index, -1),
-            foreignPivotKey: 'a_user_idx',
-            relatedPivotKey: 'a_item_idx',
-            relatedKey: 'a_index',
+            'a_user_idx',
+            'a_item_idx',
+            'a_user_index',
+            'a_index',
         )
             ->using(Stash::class)
             ->withPivot([
