@@ -29,10 +29,15 @@ class StashRelationManager extends RelationManager
     {
         return $table
             ->columns([
-                ImageColumn::make('icon'),
+                ImageColumn::make('icon')
+                    ->label('Icon')
+                    ->circular(),
                 TextColumn::make('a_name')
                     ->label('Name')
                     ->formatStateUsing(static fn(Item $record): string => empty($record->a_name) ? $record->a_name_usa : $record->a_name),
+                TextColumn::make('a_name')
+                    ->label('Name')
+                    ->formatStateUsing(static fn(Item $record): string => empty($record->a_descr) ? $record->a_descr_usa : $record->a_descr),
                 BadgeColumn::make('a_count')
                     ->label('Quantity')
                     ->color('success')

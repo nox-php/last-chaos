@@ -21,7 +21,7 @@ class Item extends Model
     public function icon(): Attribute
     {
         return Attribute::make(
-            get: fn(): string => route('last-chaos.item.icon', ['id' => $this->getKey()])
+            get: fn(): string => route('last-chaos.item.icon', ['id' => $this->a_item_idx])
         );
     }
 }
