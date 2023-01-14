@@ -29,6 +29,10 @@ class LastChaosServiceProvider extends PluginServiceProvider
         AccountRelationManager::class
     ];
 
+    protected array $styles = [
+        'last-chaos' => __DIR__ . '/../resources/dist/last-chaos.css'
+    ];
+
     public function packageRegistered(): void
     {
         parent::packageRegistered();
