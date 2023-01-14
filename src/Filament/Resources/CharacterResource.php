@@ -49,9 +49,15 @@ class CharacterResource extends Resource
                                 Forms\Components\Grid::make()
                                     ->schema([
                                         Forms\Components\TextInput::make('a_nick')
-                                            ->label('Name'),
+                                            ->label('Name')
+                                            ->required()
+                                            ->maxLength(20),
                                         Forms\Components\TextInput::make('a_level')
-                                            ->label('Level'),
+                                            ->label('Level')
+                                            ->required()
+                                            ->numeric()
+                                            ->minValue(1)
+                                            ->default(1),
                                         Forms\Components\TextInput::make('a_admin')
                                             ->label('Admin level')
                                             ->required()
