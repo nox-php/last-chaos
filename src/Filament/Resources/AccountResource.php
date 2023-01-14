@@ -139,6 +139,7 @@ class AccountResource extends Resource
                         ->requiresConfirmation()
                         ->action('unbanAccount')
                         ->hidden(static fn(Account $record): bool => !$record->is_banned),
+                    Tables\Actions\DeleteAction::make()
                 ])
             ])
             ->bulkActions([
@@ -153,7 +154,8 @@ class AccountResource extends Resource
                     ->icon('heroicon-o-check')
                     ->color('danger')
                     ->requiresConfirmation()
-                    ->action('unbanAccounts')
+                    ->action('unbanAccounts'),
+                Tables\Actions\DeleteBulkAction::make()
             ]);
     }
 

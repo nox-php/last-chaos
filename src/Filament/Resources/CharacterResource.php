@@ -9,6 +9,7 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
+use Nox\Framework\Admin\Filament\Resources\UserResource;
 use Nox\LastChaos\Filament\Resources\CharacterResource\Pages;
 use Nox\LastChaos\Filament\Resources\CharacterResource\RelationManagers\StashRelationManager;
 use Nox\LastChaos\Models\Character;
@@ -113,9 +114,20 @@ class CharacterResource extends Resource
                     ->schema([
                         Forms\Components\Placeholder::make('account.user.discord_name')
                             ->label('Discord name')
-                            ->content(static fn(?Character $record): string => $record?->account?->user?->discord_name ?? '-'),
-                        Forms\Components\Placeholder::make('account.name')
-                            ->label('Account'),
+                            ->content(static fn(?Character $record): string => $record?->account?->user?->discord_name ?? '-')
+                            ->hintAction(static fn(?Character $record) => Forms\Components\Actions\Action::make('account-link')
+                                ->icon('heroicon-o-external-link')
+                                ->url(UserResource::getUrl('edit', $record?->account?->user?->id), true)
+                                ->hidden($record?->account?->user?->id === null)
+                            ),
+                        Forms\Components\Placeholder::make('account.user_id')
+                            ->label('Account')
+                            ->content(static fn(?Character $record): string => $record?->account?->user_id ?? '-')
+                            ->hintAction(static fn(?Character $record) => Forms\Components\Actions\Action::make('account-link')
+                                ->icon('heroicon-o-external-link')
+                                ->url(AccountResource::getUrl('edit', $record?->account?->user_code), true)
+                                ->hidden($record?->account?->user_code === null)
+                            ),
                         Forms\Components\Placeholder::make('a_createdate')
                             ->label('Created at')
                             ->content(static fn(?Character $record): string => $record?->a_createdate?->diffForHumans() ?? '-'),
