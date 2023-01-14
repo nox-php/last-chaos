@@ -8,7 +8,7 @@
             >
 
             <button
-                    class="absolute t-[219px] l-[40px] bg-transparent h-[34px] w-[34px] border border-transparent transition hover:border-primary-600"
+                    class="absolute top-[219px] left-[40px] bg-transparent h-[34px] w-[34px] border border-transparent transition hover:border-primary-600"
             ></button>
         </div>
     </div>
