@@ -31,7 +31,32 @@ class CharacterResource extends Resource
                 Forms\Components\TextInput::make('a_nick')
                     ->label('Name'),
                 Forms\Components\TextInput::make('a_admin')
-                    ->label('Admin level')
+                    ->label('Admin level'),
+                Forms\Components\TextInput::make('a_statpt_remain')
+                    ->label('Free stats')
+                    ->required()
+                    ->minValue(0)
+                    ->default(0),
+                Forms\Components\TextInput::make('a_statpt_str')
+                    ->label('Strength')
+                    ->required()
+                    ->minValue(0)
+                    ->default(0),
+                Forms\Components\TextInput::make('a_statpt_dex')
+                    ->label('Dexterity')
+                    ->required()
+                    ->minValue(0)
+                    ->default(0),
+                Forms\Components\TextInput::make('a_statpt_int')
+                    ->label('Intelligence')
+                    ->required()
+                    ->minValue(0)
+                    ->default(0),
+                Forms\Components\TextInput::make('a_statpt_con')
+                    ->label('Constitution')
+                    ->required()
+                    ->minValue(0)
+                    ->default(0)
             ]);
     }
 
@@ -43,10 +68,30 @@ class CharacterResource extends Resource
                     ->label('Name')
                     ->sortable()
                     ->searchable(),
+                Tables\Columns\TextColumn::make('a_level')
+                    ->label('Level')
+                    ->sortable(),
                 Tables\Columns\BadgeColumn::make('a_admin')
                     ->label('Admin level')
-                    ->color('success')
-                    ->searchable()
+                    ->color('primary')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('a_statpt_remain')
+                    ->label('Free')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('a_statpt_str')
+                    ->label('Str')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('a_statpt_dex')
+                    ->label('Dex')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('a_statpt_int')
+                    ->label('Int')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('a_statpt_con')
+                    ->label('Con')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('a_reborn')
+                    ->label('Reborn')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('a_createdate')
                     ->label('Created at')
@@ -56,10 +101,10 @@ class CharacterResource extends Resource
                     ->label('Deleting at')
                     ->formatStateUsing(static fn(int $state): string => $state === 0 ? '-' : Carbon::parse($state)->diffForHumans())
                     ->tooltip(static fn(int $state): ?string => $state === 0 ? null : Carbon::parse($state))
-                    ->hidden(static function($livewire) {
+                    ->hidden(static function ($livewire) {
                         $filter = $livewire->getTableFilterState('trashed')['value'];
 
-                        if($filter === '0') {
+                        if ($filter === '0') {
                             return false;
                         }
 
@@ -71,13 +116,13 @@ class CharacterResource extends Resource
             ])
             ->actions([
                 Tables\Actions\DeleteAction::make(),
-                Tables\Actions\ForceDeleteAction::make(),
                 Tables\Actions\RestoreAction::make(),
+                Tables\Actions\ForceDeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
-                Tables\Actions\ForceDeleteBulkAction::make(),
                 Tables\Actions\RestoreBulkAction::make(),
+                Tables\Actions\ForceDeleteBulkAction::make(),
             ]);
     }
 
