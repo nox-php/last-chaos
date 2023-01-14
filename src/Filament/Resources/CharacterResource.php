@@ -34,7 +34,12 @@ class CharacterResource extends Resource
             ->schema([
                 Forms\Components\Tabs::make('Character')
                     ->disableLabel()
-                    ->columnSpanFull()
+                    ->columns([
+                        'sm' => 2,
+                    ])
+                    ->columnSpan([
+                        'sm' => 2,
+                    ])
                     ->schema([
                         Forms\Components\Tabs\Tab::make('Basic')
                             ->schema([
