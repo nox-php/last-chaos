@@ -168,7 +168,7 @@ class CharacterResource extends Resource
                             ->label('Created at')
                             ->content(static fn(?Character $record): string => $record?->a_createdate?->diffForHumans() ?? '-'),
                         Forms\Components\Placeholder::make('a_levelup_date')
-                            ->label('Last leveled up at')
+                            ->label('Last leveled up')
                             ->content(static fn(?Character $record): string => $record?->a_levelup_date?->diffForHumans() ?? '-'),
                     ])
             ]);
@@ -229,9 +229,12 @@ class CharacterResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\DeleteAction::make(),
-                Tables\Actions\RestoreAction::make(),
-                Tables\Actions\ForceDeleteAction::make(),
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\DeleteAction::make(),
+                    Tables\Actions\RestoreAction::make(),
+                    Tables\Actions\ForceDeleteAction::make(),
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
