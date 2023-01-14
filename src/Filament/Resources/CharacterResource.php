@@ -58,18 +58,23 @@ class CharacterResource extends Resource
                                             ->numeric()
                                             ->minValue(0)
                                             ->default(0),
-                                        Forms\Components\Select::make('a_job')
-                                            ->label('Class')
-                                            ->required()
-                                            ->options(LastChaos::getAvailableClasses()),
-                                        Forms\Components\Select::make('a_job2')
-                                            ->label('Job')
-                                            ->required()
-                                            ->options(static function (Closure $get) {
-                                                $class = $get('a_job');
+                                        Forms\Components\Fieldset::make('Jobs')
+                                            ->columnSpanFull()
+                                            ->schema([
+                                                Forms\Components\Select::make('a_job')
+                                                    ->label('Class')
+                                                    ->required()
+                                                    ->reactive()
+                                                    ->options(LastChaos::getAvailableClasses()),
+                                                Forms\Components\Select::make('a_job2')
+                                                    ->label('Job')
+                                                    ->required()
+                                                    ->options(static function (Closure $get) {
+                                                        $class = $get('a_job');
 
-                                                return $class === null ? [] : LastChaos::getAvailableJobs($class);
-                                            })
+                                                        return $class === null ? [] : LastChaos::getAvailableJobs($class);
+                                                    })
+                                            ])
                                     ])
                             ]),
                         Forms\Components\Tabs\Tab::make('Stats')
