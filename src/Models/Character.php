@@ -2,11 +2,14 @@
 
 namespace Nox\LastChaos\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Nox\LastChaos\Concerns\DelayedDeletes;
 use Nox\LastChaos\Concerns\HasDynamicTables;
+use Nox\LastChaos\Enums\CharacterClass;
+use Nox\LastChaos\Enums\CharacterJob;
 
 class Character extends Model
 {
@@ -74,5 +77,33 @@ class Character extends Model
     public function getTable(): string
     {
         return config('last-chaos.database.schemas.db') . '.t_characters';
+    }
+
+    public function characterClass(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => CharacterClass::tryFrom($this->a_job),
+            set: function (CharacterClass|int $value) {
+                if ($value instanceof CharacterClass) {
+                    $this->a_job = $value->value;
+                } else {
+                    $this->a_job = $value;
+                }
+            }
+        );
+    }
+
+    public function characterJob(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => CharacterJob::character($this),
+            set: function (CharacterJob|int $value) {
+                if ($value instanceof CharacterJob) {
+                    $this->a_job2 = explode('.', $value->value)[1];
+                } else {
+                    $this->a_job2 = $value;
+                }
+            }
+        );
     }
 }

@@ -51,7 +51,23 @@ class CharacterResource extends Resource
                                         Forms\Components\TextInput::make('a_level')
                                             ->label('Level'),
                                         Forms\Components\TextInput::make('a_admin')
-                                            ->label('Admin level'),
+                                            ->label('Admin level')
+                                            ->required()
+                                            ->numeric()
+                                            ->minValue(0)
+                                            ->default(0),
+                                        Forms\Components\Select::make('character_class')
+                                            ->options([
+                                                0 => 'Titan',
+                                                1 => 'Knight',
+                                                2 => 'Healer',
+                                                3 => 'Mage',
+                                                4 => 'Rogue',
+                                                5 => 'Sorcerer',
+                                                6 => 'NightShadow',
+                                                7 => 'Ex-Rogue',
+                                                8 => 'ArchMage'
+                                            ]),
                                     ])
                             ]),
                         Forms\Components\Tabs\Tab::make('Stats')
@@ -117,7 +133,7 @@ class CharacterResource extends Resource
                             ->content(static fn(?Character $record): string => $record?->account?->user?->discord_name ?? '-')
                             ->hintAction(static fn(?Character $record) => Forms\Components\Actions\Action::make('account-link')
                                 ->icon('heroicon-o-external-link')
-                                ->url(UserResource::getUrl('edit', $record?->account?->user?->id), true)
+                                ->url(UserResource::getUrl('edit', $record?->account?->user?->id ?? -1), true)
                                 ->hidden($record?->account?->user?->id === null)
                             ),
                         Forms\Components\Placeholder::make('account.user_id')
@@ -125,7 +141,7 @@ class CharacterResource extends Resource
                             ->content(static fn(?Character $record): string => $record?->account?->user_id ?? '-')
                             ->hintAction(static fn(?Character $record) => Forms\Components\Actions\Action::make('account-link')
                                 ->icon('heroicon-o-external-link')
-                                ->url(AccountResource::getUrl('edit', $record?->account?->user_code), true)
+                                ->url(AccountResource::getUrl('edit', $record?->account?->user_code ?? -1), true)
                                 ->hidden($record?->account?->user_code === null)
                             ),
                         Forms\Components\Placeholder::make('a_createdate')
