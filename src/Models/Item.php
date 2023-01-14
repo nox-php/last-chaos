@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Item extends Model
 {
     public $timestamps = false;
+    
     protected $connection = 'last-chaos';
+
     protected $primaryKey = 'a_index';
 
     protected $guarded = [];
