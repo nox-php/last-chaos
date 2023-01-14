@@ -35,11 +35,12 @@ class StashRelationManager extends RelationManager
                     ->label('Name')
                     ->formatStateUsing(static fn(Item $record): string => empty($record->a_name) ? $record->a_name_usa : $record->a_name),
                 TextColumn::make('a_descr')
-                    ->label('Name')
+                    ->label('Description')
                     ->formatStateUsing(static fn(Item $record): string => empty($record->a_descr) ? $record->a_descr_usa : $record->a_descr),
                 BadgeColumn::make('a_count')
                     ->label('Quantity')
                     ->color('success')
+                    ->formatStateUsing(static fn($state) => number_format($state))
             ])
             ->headerActions([
                 AttachAction::make()

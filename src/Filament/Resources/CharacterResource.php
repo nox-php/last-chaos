@@ -53,9 +53,18 @@ class CharacterResource extends Resource
                     ->sortable()
                     ->date(),
                 Tables\Columns\TextColumn::make('a_deletedelay')
-                    ->label('Deleting in')
-                    ->formatStateUsing(static fn(int $state): string => Carbon::parse($state)->diffForHumans())
-                    ->hidden(static fn($livewire) => $livewire->getTableFilterState('trashed')['value'] == '0')
+                    ->label('Deleting at')
+                    ->formatStateUsing(static fn(int $state): string => $state === 0 ? '-' : Carbon::parse($state)->diffForHumans())
+                    ->tooltip(static fn(int $state): ?string => $state === 0 ? null : Carbon::parse($state))
+                    ->hidden(static function($livewire) {
+                        $filter = $livewire->getTableFilterState('trashed')['value'];
+
+                        if($filter === '0') {
+                            return false;
+                        }
+
+                        return empty($filter);
+                    })
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
