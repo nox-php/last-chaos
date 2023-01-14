@@ -18,19 +18,11 @@ class Character extends Model
 
     protected $primaryKey = 'a_index';
 
-    protected $fillable = [
-        'a_user_index',
-        'a_name',
-        'a_nick',
-        'a_job',
-        'a_job2',
-        'a_level',
-        'a_admin',
-        'a_deleted_delay'
-    ];
+    protected $guarded = [];
 
     protected $casts = [
         'a_createdate' => 'datetime',
+        'a_levelup_date' => 'datetime',
         'a_admin' => 'integer',
         'a_deletedelay' => 'integer',
     ];
