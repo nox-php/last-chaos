@@ -4,34 +4,57 @@
             <img
                 src="{{ route('last-chaos.inventory', $this->character->inventory_background) }}"
                 alt="Character Inventory"
-                style="width: 400px; height: auto;"
+                style="width: 350px; height: auto;"
             >
-
             @php
-                $top = 343;
+                $tops = [301, 351, 400, 449, 499];
             @endphp
 
             @for($rowIndex = 0; $rowIndex < 5; $rowIndex++)
-                @php
-                    $left = 60;
-                @endphp
+                <x-last-chaos::character-inventory-button
+                    :row="$rowIndex"
+                    :column="0"
+                    :height="45"
+                    :width="45"
+                    :top="$tops[$rowIndex]"
+                    :left="54"
+                />
 
-                @for($columnIndex = 0; $columnIndex < 5; $columnIndex++)
-                    <x-last-chaos::character-inventory-button
-                        tab="0"
-                        :row="$rowIndex"
-                        :column="$columnIndex"
-                        style="top: {{ $top }}px; left: {{ $left }}px;"
-                    />
+                <x-last-chaos::character-inventory-button
+                    :row="1"
+                    :column="1"
+                    :height="46"
+                    :width="46"
+                    :top="$tops[$rowIndex]"
+                    :left="103"
+                />
 
-                    @php
-                        $left += 57;
-                    @endphp
-                @endfor
+                <x-last-chaos::character-inventory-button
+                    :row="$rowIndex"
+                    :column="2"
+                    :height="46"
+                    :width="45"
+                    :top="$tops[$rowIndex]"
+                    :left="153"
+                />
 
-                @php
-                    $top += 56;
-                @endphp
+                <x-last-chaos::character-inventory-button
+                    :row="$rowIndex"
+                    :column="3"
+                    :height="46"
+                    :width="46"
+                    :top="$tops[$rowIndex]"
+                    :left="202"
+                />
+
+                <x-last-chaos::character-inventory-button
+                    :row="$rowIndex"
+                    :column="4"
+                    :height="45"
+                    :width="45"
+                    :top="$tops[$rowIndex]"
+                    :left="252"
+                />
             @endfor
         </div>
     </div>

@@ -22,7 +22,7 @@ class CharacterInventory extends Component implements HasForms
 
     public int $row = 0;
 
-    public int $columm = 0;
+    public int $column = 0;
 
     public array $inventory = [];
 
@@ -108,12 +108,19 @@ class CharacterInventory extends Component implements HasForms
     {
         $this->tab = $tab;
         $this->row = $row;
-        $this->columm = $column;
+        $this->column = $column;
+
+        $entry = $this->inventory[$this->tab][$this->row][$this->column] ?? null;
+        if ($entry === null || $entry['item'] === null) {
+            $this->resetForm();
+        } else {
+            $this->resetForm($entry['item']['a_index'], $entry['quantity']);
+        }
 
         $this->dispatchBrowserEvent('open-modal', ['id' => 'inventory-selector']);
     }
 
-    public function save()
+    public function save(): void
     {
         $state = $this->form->getState();
 
@@ -122,13 +129,21 @@ class CharacterInventory extends Component implements HasForms
             'a_tab_idx' => $this->tab,
             'a_row_idx' => $this->row
         ], [
-            'a_item_idx' . $this->columm => $state['item'] ?? -1,
-            'a_count' . $this->columm => $state['item'] === null ? 0 : $state['quantity']
+            'a_item_idx' . $this->column => $state['item'] ?? -1,
+            'a_count' . $this->column => $state['item'] === null ? 0 : $state['quantity']
         ]);
 
         $this->loadInventory();
 
+        $this->resetForm();
+
         $this->dispatchBrowserEvent('close-modal', ['id' => 'inventory-selector']);
+    }
+
+    protected function resetForm(?int $item = null, int $quantity = 1): void
+    {
+        data_set($this, 'item', $item);
+        data_set($this, 'quantity', $quantity);
     }
 
     protected function getFormSchema(): array
@@ -139,22 +154,13 @@ class CharacterInventory extends Component implements HasForms
                     Select::make('item')
                         ->label('Item')
                         ->searchable()
-                        ->getSearchResultsUsing(fn(string $search) => Item::where('a_name', 'like', "%{$search}%")->limit(50)->pluck('a_name', 'a_index'))
+                        ->getSearchResultsUsing(fn(string $search) => Item::query()->whereRaw('LOWER(a_name) LIKE LOWER(?)', ['%' . $search . '%'])->limit(50)->pluck('a_name', 'a_index'))
                         ->getOptionLabelUsing(fn($value): ?string => Item::find($value)?->a_name),
                     TextInput::make('quantity')
                         ->label('Quantity')
                         ->numeric()
                         ->minValue(1)
                         ->default(1)
-                        ->afterStateHydrated(function (Closure $set) {
-                            $entry = $this->inventory[$this->tab][$this->row][$this->columm] ?? null;
-                            if ($entry === null || $entry['item'] === null) {
-                                return;
-                            }
-
-                            $set('item', $entry['item']['a_index']);
-                            $set('quantity', $entry['quantity']);
-                        })
                 ])
         ];
     }
