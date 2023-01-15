@@ -8,7 +8,7 @@ class InventoryRelationManager extends RelationManager
 {
     protected static string $view = 'last-chaos::filament.relation-managers.inventory';
 
-    protected static string $relationship = 'inventory_rows';
+    protected static string $relationship = 'inventory';
 
     protected static ?string $title = 'Inventory';
 }
