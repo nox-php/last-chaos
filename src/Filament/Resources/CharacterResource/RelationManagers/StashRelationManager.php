@@ -16,6 +16,7 @@ use Filament\Tables\Columns\TextColumn;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Nox\LastChaos\Models\Item;
+use Nox\LastChaos\Support\LastChaos;
 
 class StashRelationManager extends RelationManager
 {
@@ -52,13 +53,7 @@ class StashRelationManager extends RelationManager
                     ))
                     ->mutateFormDataUsing(fn($livewire, array $data) => [
                         ...$data,
-                        'a_serial' => sprintf(
-                            '%d%02d%02d%04d',
-                            time(),
-                            $livewire->getOwnerRecord()->a_server,
-                            1,
-                            random_int(0, 9999)
-                        )
+                        'a_serial' => LastChaos::generateItemSerial($livewire->getOwnerRecord()->a_server)
                     ])
                     ->form(static fn(AttachAction $action): array => [
                         $action->getRecordSelect(),

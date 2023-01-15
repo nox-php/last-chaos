@@ -11,6 +11,7 @@ use Filament\Forms\Contracts\HasForms;
 use Livewire\Component;
 use Nox\LastChaos\Models\Character;
 use Nox\LastChaos\Models\Item;
+use Nox\LastChaos\Support\LastChaos;
 
 class CharacterInventory extends Component implements HasForms
 {
@@ -39,7 +40,7 @@ class CharacterInventory extends Component implements HasForms
     {
         $this->inventory = [];
 
-        $records = $this->character->inventory_rows;
+        $records = $this->character->inventory;
 
         $ids = $records
             ->map(static fn($record): array => [
@@ -124,13 +125,14 @@ class CharacterInventory extends Component implements HasForms
     {
         $state = $this->form->getState();
 
-        $this->character->inventory_rows()->updateOrInsert([
+        $this->character->inventory()->updateOrInsert([
             'a_char_idx' => $this->character->a_index,
             'a_tab_idx' => $this->tab,
             'a_row_idx' => $this->row
         ], [
             'a_item_idx' . $this->column => $state['item'] ?? -1,
-            'a_count' . $this->column => $state['item'] === null ? 0 : $state['quantity']
+            'a_count' . $this->column => $state['item'] === null ? 0 : $state['quantity'],
+            'a_serial' . $this->column => LastChaos::generateItemSerial($this->character->a_server)
         ]);
 
         $this->loadInventory();

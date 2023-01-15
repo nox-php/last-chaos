@@ -11,6 +11,17 @@ class LastChaos
 
     private static ?array $cachedClasses = null;
 
+    public static function generateItemSerial(int $server): string
+    {
+        return sprintf(
+            '%d%02d%02d%04d',
+            time(),
+            $server,
+            1,
+            random_int(0, 9999)
+        );
+    }
+
     public static function hash(string $username, string $password): string
     {
         $algo = config('last-chaos.auth.hash');

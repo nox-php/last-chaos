@@ -28,7 +28,8 @@ class Character extends Model
         'a_levelup_date' => 'datetime',
         'a_admin' => 'integer',
         'a_deletedelay' => 'integer',
-        'a_skill_point' => 'integer'
+        'a_skill_point' => 'integer',
+        'a_server' => 'integer'
     ];
 
     public function account(): BelongsTo
@@ -40,7 +41,7 @@ class Character extends Model
         );
     }
 
-    public function inventory_rows(): HasMany
+    public function inventory(): HasMany
     {
         return $this->hasManyDynamic(
             InventoryRow::class,
