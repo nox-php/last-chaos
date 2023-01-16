@@ -81,6 +81,30 @@ class CharacterResource extends Resource
 
                                                         return $class === null ? [] : LastChaos::getAvailableJobs($class);
                                                     })
+                                            ]),
+                                        Forms\Components\Fieldset::make('Money')
+                                            ->columnSpanFull()
+                                            ->schema([
+                                                Forms\Components\TextInput::make('stash_money.a_stash_money')
+                                                    ->label('Stash money')
+                                                    ->required()
+                                                    ->numeric()
+                                                    ->default(0)
+                                                    ->minValue(0)
+                                                    ->loadStateFromRelationshipsUsing(static fn(Character $record, $component) => $component->state($record->stash_money?->a_stash_money ?? 0))
+                                                    ->saveRelationshipsUsing(static fn(Character $record, $state) => $record->stash_money()->updateOrInsert(
+                                                        [
+                                                            'a_user_index' => $record->a_user_index
+                                                        ], [
+                                                            'a_stash_money' => $state
+                                                        ]
+                                                    )),
+                                                Forms\Components\TextInput::make('a_nas')
+                                                    ->label('Inventory money')
+                                                    ->required()
+                                                    ->numeric()
+                                                    ->default(0)
+                                                    ->minValue(0)
                                             ])
                                     ])
                             ]),

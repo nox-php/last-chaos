@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Nox\LastChaos\Concerns\DelayedDeletes;
 use Nox\LastChaos\Concerns\HasDynamicTables;
 use Nox\LastChaos\Support\LastChaos;
@@ -21,7 +22,25 @@ class Character extends Model
 
     protected $primaryKey = 'a_index';
 
-    protected $guarded = [];
+    protected $fillable = [
+        'a_name',
+        'a_nick',
+        'a_level',
+        'a_admin',
+        'a_job',
+        'a_job2',
+        'a_nas',
+        'a_statpt_remain',
+        'a_skill_point',
+        'a_statpt_str',
+        'a_statpt_dex',
+        'a_statpt_int',
+        'a_statpt_con',
+        'a_hp',
+        'a_max_hp',
+        'a_mp',
+        'a_max_mp'
+    ];
 
     protected $casts = [
         'a_createdate' => 'datetime',
@@ -47,6 +66,15 @@ class Character extends Model
             InventoryRow::class,
             config('last-chaos.database.schemas.db') . '.t_inven0' . substr((string)$this->a_index, -1),
             'a_char_idx',
+            'a_index'
+        );
+    }
+
+    public function wearing(): HasMany
+    {
+        return $this->hasMany(
+            WearingRow::class,
+            'a_char_index',
             'a_index'
         );
     }
@@ -85,6 +113,11 @@ class Character extends Model
                 'a_now_dur',
                 'a_max_dur'
             ]);
+    }
+
+    public function stash_money(): HasOne
+    {
+        return $this->hasOne(StashMoney::class, 'a_user_index', 'a_user_index');
     }
 
     public function getTable(): string

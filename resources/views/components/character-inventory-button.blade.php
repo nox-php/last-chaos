@@ -18,7 +18,7 @@
                 'class' => 'flex items-center justify-center absolute bg-transparent ring-2 ring-transparent transition hover:ring-primary-700',
                 'style' => 'width: ' . $width . 'px; height: ' . $height . 'px; top: ' . $top . 'px; left: ' . $left . 'px;'
             ]) }}
-            x-tooltip="tooltips[{{ $this->tab }}][{{ $row }}][{{ $column }}]"
+            @if($item !== null) x-tooltip="inventoryTooltips[{{ $this->tab }}][{{ $row }}][{{ $column }}]" @endif
             wire:click.prevent="updateSelection({{ $this->tab }}, {{ $row }}, {{ $column }})"
     >
         @if($item !== null)

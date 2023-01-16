@@ -3,6 +3,7 @@
 namespace Nox\LastChaos\Http\Controllers;
 
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Cache;
 use Nox\LastChaos\Models\Item;
 
 class ItemIconController extends Controller
@@ -16,6 +17,18 @@ class ItemIconController extends Controller
     }
 
     private function getIcon(Item $item)
+    {
+        $response = Cache::rememberForever(
+            'last-chaos.item.icons.' . $item->a_index,
+            fn() => $this->generateIcon($item)
+        );
+
+        return response($response)->withHeaders([
+            'Content-Type' => 'image/png'
+        ]);
+    }
+
+    private function generateIcon(Item $item): string
     {
         $src = imagecreatefrompng(__DIR__ . '/../../../resources/images/icons/ItemBtn' . $item->a_texture_id . '.png');
         $dest = imagecreatetruecolor(32, 32);
@@ -33,9 +46,5 @@ class ItemIconController extends Controller
 
         $image = ob_get_contents();
         ob_end_clean();
-
-        return response($image)->withHeaders([
-            'Content-Type' => 'image/png'
-        ]);
     }
 }
