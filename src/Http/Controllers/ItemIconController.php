@@ -46,5 +46,7 @@ class ItemIconController extends Controller
 
         $image = ob_get_contents();
         ob_end_clean();
+
+        return $image;
     }
 }
