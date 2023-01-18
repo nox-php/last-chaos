@@ -64,17 +64,35 @@ class Settings extends Page implements HasCustomAbilities
     {
         $state = $this->form->getState();
 
-        (new Env())
+        $env = (new Env())
             ->put('LAST_CHAOS_AUTH_HASH', $state['password_hash'])
             ->put('LAST_CHAOS_AUTH_SALT', $state['password_salt'])
             ->put('LAST_CHAOS_MAX_ACCOUNTS_PER_USER', $state['max_accounts_per_user'])
-            ->save();
+            ->put('LAST_CHAOS_CONNECTION_HOST', $state['database_host'])
+            ->put('LAST_CHAOS_CONNECTION_PORT', $state['database_port'])
+            ->put('LAST_CHAOS_CONNECTION_USERNAME', $state['database_username'])
+            ->put('LAST_CHAOS_DATABASE_SCHEMA_DATA', $state['database_schema_data'])
+            ->put('LAST_CHAOS_DATABASE_SCHEMA_DB', $state['database_schema_db'])
+            ->put('LAST_CHAOS_DATABASE_SCHEMA_AUTH', $state['database_schema_auth'])
+            ->put('LAST_CHAOS_DATABASE_SCHEMA_POST', $state['database_schema_post']);
 
-        Notification::make()
-            ->success()
-            ->title('Last Chaos')
-            ->body('Settings successfully updated')
-            ->send();
+        if (array_key_exists('database_password', $state)) {
+            $env->put('LAST_CHAOS_CONNECTION_USERNAME', $state['database_password'] ?? '');
+        }
+
+        if($env->save()) {
+            Notification::make()
+                ->success()
+                ->title('Last Chaos')
+                ->body('Settings successfully updated')
+                ->send();
+        } else {
+            Notification::make()
+                ->danger()
+                ->title('Last Chaos')
+                ->body('Settings failed to update')
+                ->send();
+        }
     }
 
     protected static function getNavigationGroup(): ?string
