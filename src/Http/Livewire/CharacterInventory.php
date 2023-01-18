@@ -36,9 +36,13 @@ class CharacterInventory extends Component implements HasForms
 
     public array $wearingTooltips = [];
 
+    public string $a_nas = '0';
+
     public function mount()
     {
         $this->loadInventory();
+
+        $this->a_nas = number_format($this->character->a_nas);
 
         $this->form->fill();
     }
@@ -133,9 +137,8 @@ class CharacterInventory extends Component implements HasForms
         return view('last-chaos::livewire.character-inventory');
     }
 
-    public function updateSelection(int $tab, int $row, int $column): void
+    public function updateSelection(int $row, int $column): void
     {
-        $this->tab = $tab;
         $this->row = $row;
         $this->column = $column;
         $this->selectedWearing = false;
@@ -169,6 +172,11 @@ class CharacterInventory extends Component implements HasForms
         }
 
         $this->dispatchBrowserEvent('open-modal', ['id' => 'inventory-selector']);
+    }
+
+    public function setBag(int $bag)
+    {
+        $this->tab = $bag;
     }
 
     public function save(): void

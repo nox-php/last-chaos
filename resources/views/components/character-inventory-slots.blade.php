@@ -4,7 +4,7 @@
 
 @for($rowIndex = 0; $rowIndex < 5; $rowIndex++)
     <x-last-chaos::character-inventory-button
-        :row="$rowIndex"
+        :row="$rowIndex + (6 * $this->tab)"
         :column="0"
         :height="45"
         :width="45"
@@ -13,7 +13,7 @@
     />
 
     <x-last-chaos::character-inventory-button
-        :row="$rowIndex"
+        :row="$rowIndex + (6 * $this->tab)"
         :column="1"
         :height="46"
         :width="46"
@@ -22,7 +22,7 @@
     />
 
     <x-last-chaos::character-inventory-button
-        :row="$rowIndex"
+        :row="$rowIndex + (6 * $this->tab)"
         :column="2"
         :height="46"
         :width="45"
@@ -31,7 +31,7 @@
     />
 
     <x-last-chaos::character-inventory-button
-        :row="$rowIndex"
+        :row="$rowIndex + (6 * $this->tab)"
         :column="3"
         :height="46"
         :width="46"
@@ -40,7 +40,7 @@
     />
 
     <x-last-chaos::character-inventory-button
-        :row="$rowIndex"
+        :row="$rowIndex + (6 * $this->tab)"
         :column="4"
         :height="45"
         :width="45"

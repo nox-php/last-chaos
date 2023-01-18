@@ -19,7 +19,7 @@
                 'style' => 'width: ' . $width . 'px; height: ' . $height . 'px; top: ' . $top . 'px; left: ' . $left . 'px;'
             ]) }}
             @if($item !== null) x-tooltip="inventoryTooltips[{{ $this->tab }}][{{ $row }}][{{ $column }}]" @endif
-            wire:click.prevent="updateSelection({{ $this->tab }}, {{ $row }}, {{ $column }})"
+            wire:click.prevent="updateSelection({{ $row }}, {{ $column }})"
     >
         @if($item !== null)
             <img

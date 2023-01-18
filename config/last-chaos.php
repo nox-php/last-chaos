@@ -3,17 +3,17 @@
 return [
     'database' => [
         'connection' => [
-            'host' => env('LAST_CHAOS_CONNECTION_HOST', 'lckb.dev'),
+            'host' => env('LAST_CHAOS_CONNECTION_HOST', 'localhost'),
             'port' => env('LAST_CHAOS_CONNECTION_PORT', 3306),
-            'username' => env('LAST_CHAOS_CONNECTION_USERNAME', 'lcdaTa22'),
-            'password' => env('LAST_CHAOS_CONNECTION_PASSWORD', 'nA18429V'),
+            'username' => env('LAST_CHAOS_CONNECTION_USERNAME', 'root'),
+            'password' => env('LAST_CHAOS_CONNECTION_PASSWORD', ''),
         ],
 
         'schemas' => [
-            'data' => env('LAST_CHAOS_DATABASE_SCHEMA_DATA', 'lc_2022_data'),
-            'db' => env('LAST_CHAOS_DATABASE_SCHEMA_DB', 'lc_2022_db'),
-            'auth' => env('LAST_CHAOS_DATABASE_SCHEMA_AUTH', 'lc_2022_auth'),
-            'post' => env('LAST_CHAOS_DATABASE_SCHEMA_POST', 'lc_2022_post'),
+            'data' => env('LAST_CHAOS_DATABASE_SCHEMA_DATA', 'data'),
+            'db' => env('LAST_CHAOS_DATABASE_SCHEMA_DB', 'db'),
+            'auth' => env('LAST_CHAOS_DATABASE_SCHEMA_AUTH', 'auth'),
+            'post' => env('LAST_CHAOS_DATABASE_SCHEMA_POST', 'post'),
         ]
     ],
 

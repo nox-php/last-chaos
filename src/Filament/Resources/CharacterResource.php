@@ -276,7 +276,7 @@ class CharacterResource extends Resource
     public static function getRelations(): array
     {
         return [
-            InventoryRelationManager::class,
+//            InventoryRelationManager::class,
             StashRelationManager::class
         ];
     }
