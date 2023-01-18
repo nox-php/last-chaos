@@ -77,7 +77,7 @@ class Settings extends Page implements HasCustomAbilities
             ->put('LAST_CHAOS_DATABASE_SCHEMA_POST', $state['database_schema_post']);
 
         if (array_key_exists('database_password', $state)) {
-            $env->put('LAST_CHAOS_CONNECTION_USERNAME', $state['database_password'] ?? '');
+            $env->put('LAST_CHAOS_CONNECTION_PASSWORD', $state['database_password'] ?? '');
         }
 
         if($env->save()) {
